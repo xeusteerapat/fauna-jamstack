@@ -21,11 +21,32 @@ function App() {
     loadLinks();
   }, []);
 
+  const fetchLinks = () => {
+    if (links.length === 0) {
+      return (
+        <div className='text-center pt-4'>
+          <div
+            className='spinner-border text-primary'
+            style={{
+              width: '3rem',
+              height: '3rem',
+            }}
+            role='status'
+          >
+            <span className='sr-only'>Loading...</span>
+          </div>
+        </div>
+      );
+    }
+
+    return <LinkList links={links} refreshLinks={loadLinks} />;
+  };
+
   return (
     <div className='container py-5'>
       <h1 className='text-center mb-5'>My Favorite Links</h1>
       <LinkForm refreshLinks={loadLinks} />
-      <LinkList links={links} refreshLinks={loadLinks} />
+      {fetchLinks()}
     </div>
   );
 }
