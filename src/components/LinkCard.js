@@ -7,7 +7,7 @@ const LinkCard = ({ link, refreshLinks }) => {
 
     try {
       await axios({
-        url: '/api/updateLink',
+        url: '/.netlify/functions/updateLink',
         method: 'PUT',
         data: link,
       });
@@ -23,7 +23,7 @@ const LinkCard = ({ link, refreshLinks }) => {
 
     try {
       await axios({
-        url: '/api/deleteLink',
+        url: '/.netlify/functions/deleteLink',
         method: 'DELETE',
         data: { _id },
       });

@@ -26,7 +26,7 @@ const LinkForm = ({ refreshLinks }) => {
     e.preventDefault();
     try {
       await axios({
-        url: '/api/createLink',
+        url: '/.netlify/functions/createLink',
         method: 'POST',
         data: {
           name,
