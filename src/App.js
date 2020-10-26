@@ -1,7 +1,9 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
 import LinkForm from './components/LinkForm';
 import LinkList from './components/LinkList';
+import Spinner from './components/Spinner';
 
 function App() {
   const [links, setLinks] = useState([]);
@@ -10,36 +12,20 @@ function App() {
     try {
       const res = await axios.get('/.netlify/functions/getLinks');
       const data = res.data;
-
       setLinks(data);
+      return data;
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    loadLinks();
-  }, []);
+  const { _, status } = useQuery('links', loadLinks);
 
   const fetchLinks = () => {
-    if (links.length === 0) {
-      return (
-        <div className='text-center pt-4'>
-          <div
-            className='spinner-border text-primary'
-            style={{
-              width: '3rem',
-              height: '3rem',
-            }}
-            role='status'
-          >
-            <span className='sr-only'>Loading...</span>
-          </div>
-        </div>
-      );
-    }
-
-    return <LinkList links={links} refreshLinks={loadLinks} />;
+    if (status === 'loading') return <Spinner />;
+    if (status === 'error') return <div>Error fetching data</div>;
+    if (status === 'success')
+      return <LinkList links={links} refreshLinks={loadLinks} />;
   };
 
   return (
