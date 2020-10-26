@@ -9,7 +9,7 @@ exports.handler = async event => {
   try {
     const { createLink } = await sendQuery(CREATE_LINK, variables);
 
-    return formattedResponse(200, createLink);
+    return formattedResponse(201, createLink);
   } catch (err) {
     console.log(err);
     return formattedResponse(500, {
