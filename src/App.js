@@ -19,7 +19,7 @@ function App() {
     }
   };
 
-  const { _, status } = useQuery('links', loadLinks);
+  const { status } = useQuery('links', loadLinks);
 
   const fetchLinks = () => {
     if (status === 'loading') return <Spinner />;
